@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Join me on Timetable Buddy</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1A4D6B 0%, #0A1A2A 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      padding: 24px;
+    }
+    .card {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 24px;
+      padding: 40px 32px;
+      max-width: 360px;
+      width: 100%;
+      text-align: center;
+    }
+    .logo {
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+      margin: 0 auto 20px;
+      background: #43C6E3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+    }
+    h1 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #43C6E3;
+    }
+    p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      margin-bottom: 12px;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: #43C6E3;
+      color: white;
+    }
+    .btn-secondary {
+      background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.7);
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .status {
+      margin-top: 20px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+    }
+    .spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.2);
+      border-top-color: #43C6E3;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">📚</div>
+    <h1>You've been invited!</h1>
+    <p>Someone wants to connect with you on <strong>Timetable Buddy</strong> — the ultimate student app for managing classes, assignments &amp; study schedules.</p>
+
+    <a id="openApp" class="btn btn-primary" href="#">
+      Open in Timetable Buddy
+    </a>
+    <a id="getApp" class="btn btn-secondary"
+       href="https://play.google.com/store/apps/details?id=io.github.timetablebuddy.timetable_buddy.google"
+       target="_blank">
+      Download on Play Store
+    </a>
+
+    <div class="status">
+      <span class="spinner"></span>
+      <span id="statusText">Opening app…</span>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      // Extract token from query string: ?token=abc123
+      var params = new URLSearchParams(window.location.search);
+      var token = params.get('token');
+
+      var deepLink = token
+        ? 'timetablebuddy://invite/' + token
+        : 'timetablebuddy://home';
+
+      // Set the "Open in app" button href
+      document.getElementById('openApp').href = deepLink;
+
+      // Auto-attempt deep link immediately
+      window.location.href = deepLink;
+
+      // After 2.5s, if still on this page, update status to suggest Play Store
+      setTimeout(function () {
+        document.getElementById('statusText').textContent =
+          'App not installed? Download it below.';
+      }, 2500);
+    })();
+  </script>
+</body>
+</html>
